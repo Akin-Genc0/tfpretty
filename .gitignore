@@ -1,0 +1,17 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+.terraform.lock.hcl
+
+# Go binaries
+tfpretty
+*.exe
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
