@@ -11,6 +11,7 @@ var rootCmd = &cobra.Command{
 	Use:   "tfpretty",
 	Short: "A beautiful Terraform plan viewer",
 	Long:  "tfpretty makes Terraform plans easier to read directly from your terminal.",
+	Version: "0.1.0",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		return cmd.Help()
 	},
