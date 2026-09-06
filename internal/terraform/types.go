@@ -1,5 +1,15 @@
 package terraform
 
+type Action string
+
+const (
+	ActionCreate  Action = "create"
+	ActionUpdate  Action = "update"
+	ActionDelete  Action = "delete"
+	ActionReplace Action = "replace"
+	ActionNoOp    Action = "no-op"
+)
+
 type Plan struct {
 	FormatVersion    string           `json:"format_version"`
 	TerraformVersion string           `json:"terraform_version"`
