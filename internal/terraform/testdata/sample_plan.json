@@ -1,0 +1,59 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.7.0",
+  "resource_changes": [
+    {
+      "address": "aws_instance.web",
+      "type": "aws_instance",
+      "name": "web",
+      "change": {
+        "actions": ["create"],
+        "before": null,
+        "after": {
+          "instance_type": "t3.micro",
+          "ami": "ami-0abcd1234"
+        }
+      }
+    },
+    {
+      "address": "aws_s3_bucket.logs",
+      "type": "aws_s3_bucket",
+      "name": "logs",
+      "change": {
+        "actions": ["update"],
+        "before": {
+          "versioning": false
+        },
+        "after": {
+          "versioning": true
+        }
+      }
+    },
+    {
+      "address": "aws_security_group.old",
+      "type": "aws_security_group",
+      "name": "old",
+      "change": {
+        "actions": ["delete"],
+        "before": {
+          "name": "old-sg"
+        },
+        "after": null
+      }
+    },
+    {
+      "address": "aws_instance.db",
+      "type": "aws_instance",
+      "name": "db",
+      "change": {
+        "actions": ["delete", "create"],
+        "before": {
+          "instance_type": "t3.small"
+        },
+        "after": {
+          "instance_type": "t3.medium"
+        }
+      }
+    }
+  ]
+}
