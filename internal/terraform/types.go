@@ -21,6 +21,7 @@ type ResourceChange struct {
 	Type    string `json:"type"`
 	Name    string `json:"name"`
 	Change  Change `json:"change"`
+	Action  Action `json:"-"`
 }
 
 type Change struct {
