@@ -14,6 +14,17 @@ func ParsePlan(data []byte) (Plan, error) {
 	if err != nil {
 		return Plan{}, fmt.Errorf("could not parse Terraform plan JSON: %w", err)
 	}
+
+	for index := range plan.ResourceChanges {
+		resource := &plan.ResourceChanges[index]
+		action, err := GetActionGroup(resource.Change.Actions)
+		if err != nil {
+			return Plan{}, fmt.Errorf("resolve action for %s: %w", resource.Address, err)
+		}
+
+		resource.Action = action
+	}
+
 	return plan, nil
 }
 
