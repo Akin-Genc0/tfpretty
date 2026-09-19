@@ -9,7 +9,7 @@ type Screen int
 
 const (
 	PlanScreen Screen = iota
-	Json
+	DetailScreen
 	Help
 	Diff
 )
@@ -28,7 +28,6 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	switch msg := msg.(type) {
 
-	// Is it a key press
 	case tea.KeyPressMsg:
 
 		switch msg.String() {
@@ -46,9 +45,6 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.Cursor++
 			}
 
-		case "j":
-			m.Screen = Json
-
 		case "esc":
 			m.Screen = PlanScreen
 
@@ -57,7 +53,11 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		case "d":
 			m.Screen = Diff
+
+		case "enter":
+			m.Screen = DetailScreen
 		}
+
 	}
 
 	return m, nil
