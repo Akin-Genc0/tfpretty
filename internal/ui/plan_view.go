@@ -47,7 +47,23 @@ func listResources(plan terraform.Plan, cursor int) string {
 	output := "NAME                                  TYPE\n"
 	output += "───────────────────────────────────────────────────────────────\n"
 
-	for index, resource := range plan.ResourceChanges {
+	const visibleResources = 6
+	start := 0
+	if cursor >= visibleResources {
+		start = cursor - visibleResources + 1
+	}
+
+	end := start + visibleResources
+	if end > len(plan.ResourceChanges) {
+		end = len(plan.ResourceChanges)
+	}
+
+	if start > 0 {
+		output += fmt.Sprintf("... %d more above\n", start)
+	}
+
+	for index := start; index < end; index++ {
+		resource := plan.ResourceChanges[index]
 		row := fmt.Sprintf("%-37s %s", resource.Name, resource.Type)
 
 		if index == cursor {
@@ -55,6 +71,10 @@ func listResources(plan terraform.Plan, cursor int) string {
 		} else {
 			output += row + "\n"
 		}
+	}
+
+	if end < len(plan.ResourceChanges) {
+		output += fmt.Sprintf("... %d more below\n", len(plan.ResourceChanges)-end)
 	}
 
 	return output

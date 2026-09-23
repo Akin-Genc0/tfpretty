@@ -11,11 +11,10 @@ func renderFooter() string {
 `
 }
 
-//helper function for the bottom screen render
-//helper for rendering the diffrent screens
-
 func (m Model) View() tea.View {
 	switch m.Screen {
+	case Help:
+		return renderHelpScreen(m)
 	case PlanScreen:
 		return renderPlanScreen(m)
 	default:
