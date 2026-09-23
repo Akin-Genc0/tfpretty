@@ -1,6 +1,8 @@
 package ui
 
 import (
+	"fmt"
+
 	tea "charm.land/bubbletea/v2"
 	"github.com/Akin-Genc0/tfpretty/internal/terraform"
 )
@@ -31,12 +33,40 @@ func countChanges(plan terraform.Plan) CountChange {
 	return counts
 }
 
-// have helper function to list resources have the cursor pointer so it can move
-func listResources(plan terraform.Plan, cursor int) {
-	//loop over all reoases then check whether the cruse is eqaul to its index iof so and entr is pressed then take them ot the deatl screen
+func renderChangeSummary(counts CountChange) string {
+	return fmt.Sprintf(
+		"%s  %s  %s  %s",
+		createStyle.Render(fmt.Sprintf("+  %d create", counts.CountCreate)),
+		updateStyle.Render(fmt.Sprintf("~  %d update", counts.CountUpdate)),
+		deleteStyle.Render(fmt.Sprintf("-  %d delete", counts.CountDelete)),
+		replaceStyle.Render(fmt.Sprintf("+/-  %d replace", counts.CountReplace)),
+	)
+}
+
+func listResources(plan terraform.Plan, cursor int) string {
+	output := "NAME                                  TYPE\n"
+	output += "───────────────────────────────────────────────────────────────\n"
+
+	for index, resource := range plan.ResourceChanges {
+		row := fmt.Sprintf("%-37s %s", resource.Name, resource.Type)
+
+		if index == cursor {
+			output += selectedStyle.Render(row) + "\n"
+		} else {
+			output += row + "\n"
+		}
+	}
+
+	return output
 }
 
 func renderPlanScreen(m Model) tea.View {
-	// plan layout
-	return tea.NewView("")
+	content := fmt.Sprintf(
+		"tfpretty Terraform Plan\n\n%s\n\n%s%s",
+		renderChangeSummary(countChanges(m.Plan)),
+		listResources(m.Plan, m.Cursor),
+		renderFooter(),
+	)
+
+	return tea.NewView(content)
 }
