@@ -5,7 +5,10 @@ actually about to happen to your infrastructure? `tfpretty` fixes that. It runs
 your plan for you and drops it into a clean, colorized, interactive terminal UI
 so you can actually *see* what's changing instead of scrolling through a wall of text.
 
-![tfpretty plan screen](docs/images/plan-screen.png)
+
+https://github.com/user-attachments/assets/9ffd8a10-21fa-4bd0-ace6-4e14416dd813
+
+
 
 ## What it does
 
