@@ -20,12 +20,12 @@ func renderDiffScreen(m Model) tea.View {
 	resource := m.Plan.ResourceChanges[m.Cursor]
 
 	content := fmt.Sprintf(
-		"Resource: %s\n%s\n%s\n\n%s%s",
-		resource.Name,
-		"Raw Terraform Resource",
+		"%s\n%s\n%s\n\n%s\n%s",
+		titleStyle.Render("Resource: "+resource.Name),
+		sectionStyle.Render("Raw Terraform Resource"),
 		"──────────────────────────────────────────────────────────────",
-		rawResource(resource),
-		renderFooter("esc back       ? help       q quit"),
+		valueStyle.Render(rawResource(resource)),
+		footerStyle.Render(renderFooter("esc back       ? help       q quit")),
 	)
 
 	return tea.NewView(content)

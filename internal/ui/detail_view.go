@@ -53,15 +53,23 @@ func formatChange(attribute string, before, after any) string {
 func renderDetailScreen(m Model) tea.View {
 	resource := m.Plan.ResourceChanges[m.Cursor]
 
-	content := fmt.Sprintf(
-		"Name    %s\nType    %s\n\n%s  %s\n\n%s%s",
-		resource.Name,
-		resource.Type,
-		renderActionSymbol(resource.Action),
-		strings.ToUpper(string(resource.Action)),
-		resourceData(resource),
-		renderFooter("esc back       r raw       ? help       q quit"),
+	header := fmt.Sprintf(
+		"%s  %s\n%s  %s\n",
+		titleStyle.Render("Name"),
+		valueStyle.Render(resource.Name),
+		titleStyle.Render("Type"),
+		valueStyle.Render(resource.Type),
 	)
 
+	actionText := fmt.Sprintf("%s  %s", renderActionSymbol(resource.Action), strings.ToUpper(string(resource.Action)))
+	body := fmt.Sprintf(
+		"%s\n\n%s\n%s\n\n%s",
+		header,
+		sectionStyle.Render("Change"),
+		actionText,
+		resourceData(resource),
+	)
+
+	content := fmt.Sprintf("%s%s", body, footerStyle.Render(renderFooter("esc back       r raw       ? help       q quit")))
 	return tea.NewView(content)
 }
