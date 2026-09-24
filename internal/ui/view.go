@@ -36,6 +36,8 @@ func (m Model) View() tea.View {
 		return renderHelpScreen(m)
 	case PlanScreen:
 		return renderPlanScreen(m)
+	case Diff:
+		return renderDiffScreen(m)
 	default:
 		return renderPlanScreen(m)
 	}
