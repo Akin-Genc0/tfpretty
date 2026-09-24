@@ -1,37 +1,41 @@
 # tfpretty
 
-`tfpretty` is a terminal-based viewer for Terraform plans. It runs your plan and
-renders it in a clean, colorized, interactive TUI so changes are easier to read
-and understand than raw `terraform plan` output.
+Ever squinted at a wall of `terraform plan` output trying to figure out what's
+actually about to happen to your infrastructure? `tfpretty` fixes that. It runs
+your plan for you and drops it into a clean, colorized, interactive terminal UI
+so you can actually *see* what's changing instead of scrolling through a wall of text.
 
-![tfpretty plan screen](docs/images/plan-sreen.png)
+![tfpretty plan screen](docs/images/plan-screen.png)
 
-## Features
+## What it does
 
-- Interactive plan summary with create / update / delete / replace counts
-- Per-resource detail view of changed attributes
-- Raw Terraform resource (JSON) view for full inspection
-- Built-in help screen
-- Color-coded actions and layout that adapts to your terminal width
+- Gives you an at-a-glance summary: creates, updates, deletes, and replacements, all counted up front
+- Lets you drill into any resource to see exactly which attributes changed
+- Shows the raw Terraform resource JSON when you need the full, unfiltered truth
 
-## Requirements
+
+## Before you start
+
+You'll need:
 
 - [Terraform](https://developer.hashicorp.com/terraform/install) installed and on your `PATH`
-- [Go](https://go.dev/dl/) 1.27+ (only needed to install from source)
+- [Go](https://go.dev/dl/) 1.27+ only if you're installing from source
 
-## Installation
+## Installing
 
-Install the latest release with Go:
+The quickest way is with `go install`:
 
 ```powershell
 go install github.com/Akin-Genc0/tfpretty@latest
 ```
 
-This places a `tfpretty` binary in `$(go env GOPATH)\bin` (usually
-`%USERPROFILE%\go\bin`). Add that folder to your `PATH` so `tfpretty` works from
-any directory.
+This drops a `tfpretty` binary into `$(go env GOPATH)\bin` (usually
+`%USERPROFILE%\go\bin`). Make sure that folder is on your `PATH` so you can run
+`tfpretty` from anywhere.
 
-### Build from source
+### Building from source
+
+Prefer to build it yourself? Here you go:
 
 ```powershell
 git clone https://github.com/Akin-Genc0/tfpretty.git
@@ -39,33 +43,37 @@ cd tfpretty
 go build -o tfpretty.exe .
 ```
 
-## Usage
+## Using it
 
-Run it from inside any initialized Terraform workspace:
+Jump into any initialized Terraform workspace and run:
 
 ```powershell
 tfpretty plan
 ```
 
-`tfpretty` runs `terraform plan`, reads the JSON output, and opens the viewer.
+That's it. `tfpretty` runs `terraform plan` behind the scenes, parses the JSON
+output, and hands you the interactive viewer.
 
-![Detail view](docs/images/detail-screen.png)
+
+
+
+
 
 ### Keyboard controls
 
-| Key     | Action                          |
-| ------- | ------------------------------- |
-| `↑` / `↓` | Move between resources        |
-| `enter` | Open the selected resource detail |
-| `r`     | View the raw Terraform resource |
-| `?`     | Open the help screen            |
-| `esc`   | Go back to the plan             |
-| `q`     | Quit                            |
+| Key       | What it does                       |
+| --------- | ----------------------------------- |
+| `↑` / `↓` | Move between resources              |
+| `enter`   | Open the selected resource's detail |
+| `r`       | View the raw Terraform resource     |
+| `?`       | Open the help screen                |
+| `esc`     | Back to the plan                    |
+| `q`       | Quit                                |
 
-![Raw resource view](docs/images/raw-screen.png)
-
-## Development
+## Contributing / development
 
 ```powershell
 go test ./...
 ```
+
+Found a bug or have an idea? Issues and PRs are welcome
