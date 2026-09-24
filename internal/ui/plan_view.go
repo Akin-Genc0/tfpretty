@@ -44,11 +44,27 @@ func renderChangeSummary(counts CountChange) string {
 }
 
 func listResources(plan terraform.Plan, cursor int) string {
-	output := "NAME                                  TYPE\n"
+	output := "ACTION  NAME                             TYPE\n"
 	output += "───────────────────────────────────────────────────────────────\n"
 
-	for index, resource := range plan.ResourceChanges {
-		row := fmt.Sprintf("%-37s %s", resource.Name, resource.Type)
+	const visibleResources = 6
+	start := 0
+	if cursor >= visibleResources {
+		start = cursor - visibleResources + 1
+	}
+
+	end := start + visibleResources
+	if end > len(plan.ResourceChanges) {
+		end = len(plan.ResourceChanges)
+	}
+
+	if start > 0 {
+		output += fmt.Sprintf("... %d more above\n", start)
+	}
+
+	for index := start; index < end; index++ {
+		resource := plan.ResourceChanges[index]
+		row := fmt.Sprintf("%-3s     %-32s %s", renderActionSymbol(resource.Action), resource.Name, resource.Type)
 
 		if index == cursor {
 			output += selectedStyle.Render(row) + "\n"
@@ -57,12 +73,16 @@ func listResources(plan terraform.Plan, cursor int) string {
 		}
 	}
 
+	if end < len(plan.ResourceChanges) {
+		output += fmt.Sprintf("... %d more below\n", len(plan.ResourceChanges)-end)
+	}
+
 	return output
 }
 
 func renderPlanScreen(m Model) tea.View {
 	content := fmt.Sprintf(
-		"tfpretty Terraform Plan\n\n%s\n\n%s%s",
+		"%s\n%s%s",
 		renderChangeSummary(countChanges(m.Plan)),
 		listResources(m.Plan, m.Cursor),
 		renderFooter(),
