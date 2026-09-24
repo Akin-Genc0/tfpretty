@@ -1,7 +1,9 @@
 package cmd
 
 import (
+	tea "charm.land/bubbletea/v2"
 	"github.com/Akin-Genc0/tfpretty/internal/terraform"
+	"github.com/Akin-Genc0/tfpretty/internal/ui"
 	"github.com/spf13/cobra"
 )
 
@@ -19,8 +21,15 @@ var planCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		_ = plan
-		return nil
+
+		program := tea.NewProgram(ui.Model{
+			Plan:   plan,
+			Screen: ui.PlanScreen,
+			Cursor: 0,
+		})
+
+		_, err = program.Run()
+		return err
 	},
 }
 

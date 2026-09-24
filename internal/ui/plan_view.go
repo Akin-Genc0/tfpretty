@@ -82,7 +82,7 @@ func listResources(plan terraform.Plan, cursor int) string {
 
 func renderPlanScreen(m Model) tea.View {
 	content := fmt.Sprintf(
-		"%s\n%s%s",
+		"%s\n\n%s\n%s",
 		renderChangeSummary(countChanges(m.Plan)),
 		listResources(m.Plan, m.Cursor),
 		renderFooter(),
