@@ -47,15 +47,19 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		case "esc":
 			m.Screen = PlanScreen
+			return m, tea.ClearScreen
 
 		case "?":
 			m.Screen = Help
+			return m, tea.ClearScreen
 
-		case "d":
+		case "r":
 			m.Screen = Diff
+			return m, tea.ClearScreen
 
 		case "enter":
 			m.Screen = DetailScreen
+			return m, tea.ClearScreen
 		}
 
 	}

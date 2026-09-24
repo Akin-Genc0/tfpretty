@@ -60,7 +60,7 @@ func renderDetailScreen(m Model) tea.View {
 		renderActionSymbol(resource.Action),
 		strings.ToUpper(string(resource.Action)),
 		resourceData(resource),
-		renderFooter("esc back       d raw diff       ? help       q quit"),
+		renderFooter("esc back       r raw       ? help       q quit"),
 	)
 
 	return tea.NewView(content)

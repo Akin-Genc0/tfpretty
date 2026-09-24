@@ -9,7 +9,7 @@ import (
 )
 
 func rawResource(resource terraform.ResourceChange) string {
-	b, err := json.MarshalIndent(resource.Change, "", "  ")
+	b, err := json.MarshalIndent(resource, "", "  ")
 	if err != nil {
 		return fmt.Sprintf("%#v", resource)
 	}
@@ -20,9 +20,9 @@ func renderDiffScreen(m Model) tea.View {
 	resource := m.Plan.ResourceChanges[m.Cursor]
 
 	content := fmt.Sprintf(
-		"%s\n\n%s\n%s\n\n%s%s",
+		"Resource: %s\n%s\n%s\n\n%s%s",
 		resource.Name,
-		"Raw Diff",
+		"Raw Terraform Resource",
 		"──────────────────────────────────────────────────────────────",
 		rawResource(resource),
 		renderFooter("esc back       ? help       q quit"),
