@@ -1,44 +1,49 @@
 # tfpretty
 
-Ever squinted at a wall of `terraform plan` output trying to figure out what's
-actually about to happen to your infrastructure? `tfpretty` fixes that. It runs
-your plan for you and drops it into a clean, colorized, interactive terminal UI
-so you can actually *see* what's changing instead of scrolling through a wall of text.
+A clearer, colorised way to read Terraform plans in your terminal.
 
 
-https://github.com/user-attachments/assets/9ffd8a10-21fa-4bd0-ace6-4e14416dd813
+<p>
+	<a href="https://go.dev/"><img src="https://img.shields.io/badge/go-1.27-00ADD8?logo=go&logoColor=white" alt="Go 1.27"></a>
+	<a href="https://developer.hashicorp.com/terraform"><img src="https://img.shields.io/badge/terraform-1.16+-7B42BC?logo=terraform&logoColor=white" alt="Terraform 1.16+"></a>
+	<a href="LICENSE"><img src="https://img.shields.io/github/license/Akin-Genc0/tfpretty" alt="License"></a>
+	<a href="https://github.com/Akin-Genc0/tfpretty/actions"><img src="https://github.com/Akin-Genc0/tfpretty/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+</p>
 
+![tfpretty plan screen](docs/images/plan-screen.png)
 
+</div>
+
+Terraform plans are useful, but the default output can be difficult to scan.
+`tfpretty` runs the plan, parses its JSON output, and turns the result into a
+focused interactive terminal UI.
 
 ## What it does
 
-- Gives you an at-a-glance summary: creates, updates, deletes, and replacements, all counted up front
-- Lets you drill into any resource to see exactly which attributes changed
-- Shows the raw Terraform resource JSON when you need the full, unfiltered truth
+- Summarizes creates, updates, deletes, and replacements at a glance
+- Lets you inspect a resource's changed attributes
+- Shows the complete raw Terraform resource when you need more detail
+- Uses color-coded actions and adapts to the terminal width
+- Includes built-in help and keyboard navigation
 
+## Requirements
 
-## Before you start
+- [Terraform](https://developer.hashicorp.com/terraform/install) on your `PATH`
+- [Go](https://go.dev/dl/) 1.27+ if installing from source
 
-You'll need:
+## Install
 
-- [Terraform](https://developer.hashicorp.com/terraform/install) installed and on your `PATH`
-- [Go](https://go.dev/dl/) 1.27+ only if you're installing from source
-
-## Installing
-
-The quickest way is with `go install`:
+Install the latest version with Go:
 
 ```powershell
 go install github.com/Akin-Genc0/tfpretty@latest
 ```
 
-This drops a `tfpretty` binary into `$(go env GOPATH)\bin` (usually
-`%USERPROFILE%\go\bin`). Make sure that folder is on your `PATH` so you can run
-`tfpretty` from anywhere.
+Go installs the binary into `$(go env GOPATH)\bin`, usually
+`%USERPROFILE%\go\bin`. Add that directory to your `PATH` if `tfpretty` is not
+recognized by your terminal.
 
-### Building from source
-
-Prefer to build it yourself? Here you go:
+### Build from source
 
 ```powershell
 git clone https://github.com/Akin-Genc0/tfpretty.git
@@ -46,37 +51,45 @@ cd tfpretty
 go build -o tfpretty.exe .
 ```
 
-## Using it
+## Usage
 
-Jump into any initialized Terraform workspace and run:
+From an initialized Terraform workspace:
 
 ```powershell
+terraform init
 tfpretty plan
 ```
 
-That's it. `tfpretty` runs `terraform plan` behind the scenes, parses the JSON
-output, and hands you the interactive viewer.
+`tfpretty plan` runs `terraform plan`, creates a temporary plan file, reads it
+with `terraform show -json`, and opens the interactive viewer.
 
+![tfpretty detail screen](docs/images/detail-screen.png)
 
+## Controls
 
+| Key | Action |
+| --- | --- |
+| `↑` / `↓` | Move between resources |
+| `enter` | Open resource details |
+| `r` | View the raw Terraform resource |
+| `?` | Open help |
+| `esc` | Return to the plan |
+| `q` | Quit |
 
+![tfpretty raw resource screen](docs/images/raw-screen.png)
 
+## Development
 
-### Keyboard controls
-
-| Key       | What it does                       |
-| --------- | ----------------------------------- |
-| `↑` / `↓` | Move between resources              |
-| `enter`   | Open the selected resource's detail |
-| `r`       | View the raw Terraform resource     |
-| `?`       | Open the help screen                |
-| `esc`     | Back to the plan                    |
-| `q`       | Quit                                |
-
-## Contributing / development
+Run the tests:
 
 ```powershell
 go test ./...
 ```
 
-Found a bug or have an idea? Issues and PRs are welcome
+Preview the interface with sample data:
+
+```powershell
+go run . preview
+```
+
+Issues and pull requests are welcome.
