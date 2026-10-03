@@ -1,5 +1,3 @@
-<img width="190" height="160" alt="image" src="https://github.com/user-attachments/assets/a4cfd1b9-215f-45c5-97db-d146ad2a6ce6" />
-
 # tfpretty
 
 A clearer, colorised way to read Terraform plans in your terminal.
