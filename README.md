@@ -10,7 +10,8 @@ A clearer, colorised way to read Terraform plans in your terminal.
 	<a href="https://github.com/Akin-Genc0/tfpretty/actions"><img src="https://github.com/Akin-Genc0/tfpretty/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
 </p>
 
-![tfpretty plan screen](docs/images/plan-screen.png)
+![tfpretty demo gif](docs/images/tfpretty-ezgif.com-video-to-gif-converter.gif)
+
 
 </div>
 
